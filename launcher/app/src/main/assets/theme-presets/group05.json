@@ -1,0 +1,149 @@
+{
+  "onyx": {
+    "columns": 5,
+    "dock_row": true,
+    "fill_dock": true,
+    "library_ok_opens": true,
+    "tile_menu": true,
+    "background_color": "#0E0F12",
+    "wallpaper": false,
+    "sky_intensity": 0,
+    "show_greeting": false,
+    "dock_title": false,
+    "dock_band": false,
+    "ambient_glow": false,
+    "app_glow": false,
+    "glass_style": "rim",
+    "show_network_pill": false,
+    "icon_only_buttons": true,
+    "icon_only_inputs": true,
+    "focus_overshoot": false,
+    "advanced_effects": true,
+    "app_library": true,
+    "library_button": true,
+    "show_library_pill": false
+  },
+  "orba": {
+    "background_color": "#000628",
+    "wallpaper": true,
+    "wallpaper_rotation_minutes": 0,
+    "wallpaper_dim": 0,
+    "wallpaper_true_color": true,
+    "columns": 5,
+    "rows_below_dock": 1,
+    "dock_band": false,
+    "dock_title": false,
+    "show_greeting": false,
+    "ambient_glow": false,
+    "app_glow": true,
+    "glass_style": "halo",
+    "focus_overshoot": false,
+    "icon_only_buttons": true,
+    "icon_only_inputs": true,
+    "fade_rows": true,
+    "tile_menu": true,
+    "home_idle_clock_minutes": 10,
+    "clock_wallpaper": true,
+    "clock_wallpaper_dim": 55,
+    "clock_glow": false
+  },
+  "red-rain": {
+    "dock_apps": [
+      "com.netflix.ninja",
+      "com.google.android.youtube.tv",
+      "com.amazon.amazonvideo.livingroom",
+      "com.disney.disneyplus",
+      "com.wbd.stream",
+      "com.apple.atve.androidtv.appletv"
+    ],
+    "columns": 6,
+    "fill_dock": false,
+    "app_library": false,
+    "tile_menu": true,
+    "background_color": "#050304",
+    "wallpaper": true,
+    "wallpaper_dim": 0,
+    "wallpaper_captions": false,
+    "wallpaper_true_color": true,
+    "home_idle_clock_minutes": 2,
+    "clock_wallpaper": true,
+    "clock_wallpaper_dim": 20,
+    "cinematic_home": false,
+    "dock_title": false,
+    "dock_glass": true,
+    "dock_opacity": 65,
+    "icon_only_buttons": true,
+    "ambient_glow": false,
+    "app_glow": false,
+    "focus_overshoot": false,
+    "advanced_effects": true
+  },
+  "retro": {
+    "background_color": "#000000",
+    "dock_glass": false,
+    "dock_band": false,
+    "glass_style": "rim",
+    "dock_title": false,
+    "dock_opacity": 100,
+    "fill_dock": true,
+    "columns": 5,
+    "ambient_glow": false,
+    "app_glow": false,
+    "icon_only_buttons": true,
+    "icon_only_inputs": true,
+    "wifi_status_color": true,
+    "tile_menu": true,
+    "wallpaper": true,
+    "wallpaper_rotation_minutes": 60,
+    "wallpaper_moods": {
+      "morning": [
+        "6am_4pm.jpg"
+      ],
+      "evening": [
+        "4pm_9pm.jpg"
+      ],
+      "night": [
+        "9pm_6am.jpg"
+      ]
+    },
+    "wallpaper_dim": 10,
+    "wallpaper_order": "sequential",
+    "reduced_motion": true,
+    "sky_intensity": 0
+  },
+  "ridgelines": {
+    "background_color": "#0A0712",
+    "wallpaper": true,
+    "wallpaper_rotation_minutes": 15,
+    "wallpaper_order": "sequential",
+    "wallpaper_captions": true,
+    "wallpaper_moods": {
+      "morning": [
+        "01-first-light.jpg",
+        "02-valley-mist.jpg"
+      ],
+      "evening": [
+        "03-golden-hour.jpg",
+        "04-dusk.jpg",
+        "05-smoke-haze.jpg"
+      ],
+      "night": [
+        "06-moonrise.jpg",
+        "07-starfield.jpg",
+        "08-aurora-ridge.jpg"
+      ]
+    },
+    "sky_intensity": 25,
+    "dock_title": false,
+    "dock_glass": true,
+    "dock_opacity": 50,
+    "dock_even_padding": true,
+    "ambient_glow": false,
+    "app_glow": false,
+    "icon_only_buttons": true,
+    "icon_only_inputs": true,
+    "home_idle_clock_minutes": 5,
+    "clock_wallpaper": true,
+    "clock_wallpaper_dim": 20
+  }
+}
