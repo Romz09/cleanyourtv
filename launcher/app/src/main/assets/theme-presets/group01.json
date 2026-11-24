@@ -1,0 +1,113 @@
+{
+  "aerial": {
+    "background_color": "#000000",
+    "wallpaper": true,
+    "wallpaper_rotation_minutes": 15,
+    "wallpaper_order": "shuffle",
+    "wallpaper_captions": true,
+    "rows_below_dock": 0,
+    "dock_title": true,
+    "dock_glass": true,
+    "dock_opacity": 50,
+    "dock_even_padding": true,
+    "ambient_glow": false,
+    "icon_only_buttons": true,
+    "icon_only_inputs": true,
+    "home_idle_clock_minutes": 3,
+    "back_opens_clock": true,
+    "clock_wallpaper": true,
+    "clock_wallpaper_dim": 25
+  },
+  "ambient-glass": {
+    "dock_apps": [
+      "com.google.android.youtube.tv",
+      "com.netflix.ninja",
+      "com.amazon.amazonvideo.livingroom",
+      "com.apple.atve.androidtv.appletv"
+    ],
+    "fill_dock": true,
+    "columns": 5,
+    "rows_below_dock": 0,
+    "single_row": false,
+    "background_color": "#05070C",
+    "wallpaper": true,
+    "wallpaper_captions": true,
+    "wallpaper_rotation_minutes": 5,
+    "wallpaper_order": "sequential",
+    "wallpaper_true_color": false,
+    "wallpaper_dim": 0,
+    "ambient_glow": false,
+    "app_glow": false,
+    "header_white": true,
+    "clock_wallpaper": true,
+    "clock_wallpaper_dim": 25,
+    "dock_glass": true,
+    "dock_opacity": 40,
+    "dock_even_padding": true,
+    "icon_only_buttons": true,
+    "icon_only_inputs": true,
+    "fade_rows": false,
+    "focus_overshoot": false,
+    "advanced_effects": false
+  },
+  "aurora": {
+    "background_color": "#070A14",
+    "wallpaper": true
+  },
+  "blocky": {
+    "wallpaper": true,
+    "wallpaper_rotation_minutes": 60,
+    "wallpaper_moods": {
+      "morning": [
+        "01-meadow-day.png",
+        "04-plains.png",
+        "05-desert.png",
+        "06-snowy-forest.png",
+        "07-jungle.png",
+        "08-ocean.png",
+        "09-blossom-grove.png"
+      ],
+      "evening": [
+        "01-meadow-day.png",
+        "02-meadow-dusk.png",
+        "04-plains.png",
+        "05-desert.png",
+        "06-snowy-forest.png",
+        "07-jungle.png",
+        "08-ocean.png",
+        "09-blossom-grove.png"
+      ],
+      "night": [
+        "03-meadow-night.png",
+        "10-cave.png",
+        "11-lava-cavern.png"
+      ]
+    },
+    "wallpaper_captions": true,
+    "wallpaper_dim": 15,
+    "dock_opacity": 70,
+    "dock_title": false,
+    "ambient_glow": false,
+    "focus_overshoot": false,
+    "clock_wallpaper": true,
+    "clock_wallpaper_dim": 25
+  },
+  "christmas": {
+    "background_color": "#050A1C",
+    "wallpaper": true,
+    "wallpaper_rotation_minutes": 20,
+    "wallpaper_order": "sequential",
+    "wallpaper_captions": true,
+    "wallpaper_dim": 12,
+    "rows_below_dock": 0,
+    "dock_title": false,
+    "dock_glass": true,
+    "dock_opacity": 40,
+    "dock_even_padding": true,
+    "ambient_glow": false,
+    "fade_rows": true,
+    "icon_only_buttons": true,
+    "clock_wallpaper": true,
+    "clock_wallpaper_dim": 45
+  }
+}
