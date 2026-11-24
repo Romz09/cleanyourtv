@@ -25,11 +25,12 @@ final class ThemeSelector {
                 Iterator<String> it=group.keys();
                 while(it.hasNext()){String k=it.next();themes.put(k,group.getJSONObject(k));}
             }
+            themes.put("Eclipse personalizado",new JSONObject());
             String[] names=themes.keySet().toArray(new String[0]);
             new AlertDialog.Builder(a).setTitle("Temas / Themes").setItems(names,(d,i)->
                 new AlertDialog.Builder(a).setTitle(names[i])
                 .setMessage("Aplicar estilo visual conservando aplicaciones y fondo actual.")
-                .setPositiveButton("Aplicar",(x,y)->apply(a,themes.get(names[i]),done))
+                .setPositiveButton("Aplicar",(x,y)->select(a,names[i],themes.get(names[i]),done))
                 .setNegativeButton(android.R.string.cancel,null).show())
                 .setNeutralButton("Restaurar anterior",(d,i)->restore(a,done))
                 .setNegativeButton(android.R.string.cancel,null).show();
@@ -39,6 +40,20 @@ final class ThemeSelector {
     private static void write(AtomicFile file,byte[] data)throws IOException{
         FileOutputStream out=file.startWrite();
         try{out.write(data);file.finishWrite(out);}catch(IOException e){file.failWrite(out);throw e;}
+    }
+    private static void select(Activity a,String name,JSONObject theme,Runnable done){
+        try {
+            File dir=Config.dir(a);if(dir==null)throw new IOException();
+            AtomicFile target=new AtomicFile(new File(dir,Config.FILE_NAME));
+            AtomicFile eclipse=new AtomicFile(new File(a.getFilesDir(),"eclipse-original.json"));
+            byte[] current=target.getBaseFile().exists()?target.readFully():"{}".getBytes(StandardCharsets.UTF_8);
+            if(!eclipse.getBaseFile().exists())write(eclipse,current);
+            if("Eclipse personalizado".equals(name)){
+                write(new AtomicFile(new File(a.getFilesDir(),"previous-theme.json")),current);
+                write(target,eclipse.readFully());
+                done.run();
+            }else apply(a,theme,done);
+        }catch(Exception e){error(a);}
     }
     private static void apply(Activity a,JSONObject theme,Runnable done){
         try{
