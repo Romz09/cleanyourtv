@@ -48,3 +48,14 @@ dependencies {
     // Test only (never in the APK): plain JVM tests for the module card validators, src/test.
     testImplementation 'junit:junit:4.13.2'
 }
+
+ // Package original theme artwork and attribution without duplicating repository files.
+ def bundledThemeAssets = layout.buildDirectory.dir('generated/bundledThemeAssets')
+ tasks.register('bundleOriginalThemes', Sync) {
+     from('../../themes') {
+         include '*/wallpaper.jpg', '*/wallpapers/**', '*/CREDITS.md', '*/screenshot.jpg'
+     }
+     into(bundledThemeAssets.map { it.dir('original-themes') })
+ }
+ android.sourceSets.main.assets.srcDir(bundledThemeAssets)
+ tasks.named('preBuild').configure { dependsOn('bundleOriginalThemes') }
