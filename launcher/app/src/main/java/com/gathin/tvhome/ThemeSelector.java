@@ -64,7 +64,7 @@ final class ThemeSelector {
             if(!eclipse.getBaseFile().exists())write(eclipse,current);
             if("Eclipse personalizado".equals(name)){
                 write(new AtomicFile(new File(a.getFilesDir(),"previous-theme.json")),current);
-                write(target,eclipse.readFully());
+                write(target,mergeVisual(current,eclipse.readFully()));
                 done.run();
             }else { prepareArtwork(a,name); theme.put("bundled_theme",name); apply(a,theme,done); }
         }catch(Exception e){error(a);}
@@ -83,11 +83,19 @@ final class ThemeSelector {
             done.run();
         }catch(Exception e){error(a);}
     }
+    private static byte[] mergeVisual(byte[] current,byte[] saved)throws org.json.JSONException {
+        JSONObject live=new JSONObject(new String(current,StandardCharsets.UTF_8));
+        JSONObject theme=new JSONObject(new String(saved,StandardCharsets.UTF_8));
+        for(String k:VISUAL){live.remove(k);if(theme.has(k))live.put(k,theme.get(k));}
+        return live.toString().getBytes(StandardCharsets.UTF_8);
+    }
     private static void restore(Activity a,Runnable done){
         try{
             File dir=Config.dir(a);if(dir==null)throw new IOException();
             AtomicFile backup=new AtomicFile(new File(a.getFilesDir(),"previous-theme.json"));
-            write(new AtomicFile(new File(dir,Config.FILE_NAME)),backup.readFully());
+            AtomicFile target=new AtomicFile(new File(dir,Config.FILE_NAME));
+            byte[] current=target.getBaseFile().exists()?target.readFully():"{}".getBytes(StandardCharsets.UTF_8);
+            write(target,mergeVisual(current,backup.readFully()));
             done.run();
         }catch(Exception e){error(a);}
     }
