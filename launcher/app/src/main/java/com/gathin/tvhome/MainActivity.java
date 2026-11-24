@@ -326,6 +326,31 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
      * reach Home after onPause, when that key opened another app, and must not start the clock over the app.
      */
     private boolean resumed;
+    private byte[] loadedConfigBytes;
+    private byte[] configBytes() {
+        java.io.File dir = Config.dir(this);
+        if (dir == null) return null;
+        java.io.File file = new java.io.File(dir, Config.FILE_NAME);
+        if (!file.exists()) return new byte[0];
+        try { return java.nio.file.Files.readAllBytes(file.toPath()); }
+        catch (java.io.IOException e) { return null; }
+    }
+    private boolean externalConfigChanged() {
+        byte[] next = configBytes();
+        if (next == null || java.util.Arrays.equals(loadedConfigBytes, next)) return false;
+        try {
+            if (next.length != 0) new org.json.JSONObject(new String(next, java.nio.charset.StandardCharsets.UTF_8));
+        } catch (org.json.JSONException e) { return false; }
+        return true;
+    }
+    private final Runnable configRefresh = new Runnable() {
+        @Override public void run() {
+            if (!resumed || isFinishing() || isDestroyed()) return;
+            if (externalConfigChanged()) { recreate(); return; }
+            handler.postDelayed(this, 2000);
+        }
+    };
+
     /** Rebuild the tiles on the way back to Home only when apps changed meanwhile (TileRefresh). */
     private final TileRefresh tileRefresh = new TileRefresh();
     /** PackageManager's change counter at the last rebuild, to catch a package broadcast that never arrived. */
@@ -461,6 +486,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         setContentView(R.layout.activity_main);
         density = getResources().getDisplayMetrics().density;
         // config.xml, overlaid by config.json from a pushed theme (see Config and tools/theme.sh).
+        loadedConfigBytes = configBytes();
         Config cfg = Config.load(this);
         homeAppKeys = RemoteKeys.parseAppKeys(cfg.appKeys);
         clockFormat = cfg.clockFormat;
@@ -1111,10 +1137,12 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         // Something changed in Launcher settings: rebuild with it, however the settings were left. Only Back
         // delivered their RESULT_OK; Home (the remote's button) clears them off this task and the result comes
         // back cancelled, so a new wallpaper or layout waited for the next process start.
-        if (Config.settingsChanged(settingsRevision, settingsRevision())) {
+        if (externalConfigChanged() || Config.settingsChanged(settingsRevision, settingsRevision())) {
             recreate();
             return;
         }
+        handler.removeCallbacks(configRefresh);
+        handler.postDelayed(configRefresh, 2000);
         restartIdleClock();
         promptsPaused = false;
         if (grid.getAdapter() == null) grid.setAdapter(adapter);   // dropped by onTrimMemory
@@ -1317,6 +1345,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
 
     @Override
     protected void onPause() {
+        handler.removeCallbacks(configRefresh);
         super.onPause();
         resumed = false;
         // No UP reaches a paused Home, so a vendor-key hold it saw go down would still open its app later.
@@ -1397,6 +1426,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
 
     @Override
     protected void onDestroy() {
+        handler.removeCallbacks(configRefresh);
         super.onDestroy();
         ViewTreeObserver tree = getWindow().getDecorView().getViewTreeObserver();
         if (tree.isAlive()) tree.removeOnGlobalFocusChangeListener(glassFocusListener);
