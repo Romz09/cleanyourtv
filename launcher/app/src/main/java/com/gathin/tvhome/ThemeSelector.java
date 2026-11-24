@@ -36,7 +36,7 @@ final class ThemeSelector {
                 .setNegativeButton(android.R.string.cancel,null).show();
         }catch(Exception e){error(a);}
     }
-    private static final String[] VISUAL={"background_color","columns","rows_below_dock","dock_opacity","dock_glass","dock_title","dock_even_padding","ambient_glow","app_glow","header_white","fade_rows","focus_overshoot","advanced_effects","animations","reduced_motion","wallpaper_dim","wallpaper_true_color"};
+    private static final String[] VISUAL={"background_color","columns","rows_below_dock","dock_opacity","dock_glass","dock_title","dock_even_padding","ambient_glow","app_glow","header_white","fade_rows","focus_overshoot","advanced_effects","animations","reduced_motion","wallpaper_dim","wallpaper_true_color","bundled_theme","wallpaper","wallpaper_rotation_minutes","wallpaper_order","wallpaper_moods","wallpaper_captions","clock_wallpaper","clock_wallpaper_dim"};
     private static void write(AtomicFile file,byte[] data)throws IOException{
         FileOutputStream out=file.startWrite();
         try{out.write(data);file.finishWrite(out);}catch(IOException e){file.failWrite(out);throw e;}
@@ -52,7 +52,7 @@ final class ThemeSelector {
                 write(new AtomicFile(new File(a.getFilesDir(),"previous-theme.json")),current);
                 write(target,eclipse.readFully());
                 done.run();
-            }else apply(a,theme,done);
+            }else { prepareArtwork(a,name); theme.put("bundled_theme",name); apply(a,theme,done); }
         }catch(Exception e){error(a);}
     }
     private static void apply(Activity a,JSONObject theme,Runnable done){
@@ -65,7 +65,7 @@ final class ThemeSelector {
             for(String k:VISUAL){current.remove(k);if(theme.has(k))current.put(k,theme.get(k));}
             write(backup,old);
             write(target,current.toString().getBytes(StandardCharsets.UTF_8));
-            a.getSharedPreferences(Config.SETTINGS_NAME,0).edit().remove("columns").remove(Config.ROWS_BELOW_DOCK_KEY).remove(Config.DOCK_OPACITY_KEY).remove("animations").remove("advanced_effects").commit();
+            a.getSharedPreferences(Config.SETTINGS_NAME,0).edit().remove("columns").remove(Config.ROWS_BELOW_DOCK_KEY).remove(Config.DOCK_OPACITY_KEY).remove("animations").remove("advanced_effects").remove(Config.WALLPAPER_CHOICE_KEY).commit();
             done.run();
         }catch(Exception e){error(a);}
     }
@@ -76,6 +76,34 @@ final class ThemeSelector {
             write(new AtomicFile(new File(dir,Config.FILE_NAME)),backup.readFully());
             done.run();
         }catch(Exception e){error(a);}
+    }
+    static File artworkDir(android.content.Context a, String name, File fallback) {
+        if(name==null || !name.matches("[a-z0-9_-]+")) return fallback;
+        File f=new File(a.getFilesDir(),"original-themes/"+name);
+        return f.isDirectory()?f:fallback;
+    }
+    private static void prepareArtwork(Activity a,String name)throws IOException{
+        File dest=new File(a.getFilesDir(),"original-themes/"+name);
+        if(!dest.isDirectory()&&!dest.mkdirs())throw new IOException("Cannot create theme directory");
+        copyAssets(a,"original-themes/"+name,dest);
+    }
+    private static void copyAssets(Activity a,String path,File dest)throws IOException{
+        String[] children=a.getAssets().list(path);
+        if(children==null)return;
+        for(String child:children){
+            if(child.equals("screenshot.jpg"))continue;
+            String src=path+"/"+child;
+            File target=new File(dest,child);
+            String[] nested=a.getAssets().list(src);
+            if(nested!=null&&nested.length>0){
+                if(!target.isDirectory()&&!target.mkdirs())throw new IOException();
+                copyAssets(a,src,target);
+            }else{
+                try(InputStream in=a.getAssets().open(src);FileOutputStream out=new FileOutputStream(target)){
+                    byte[] buf=new byte[16384];int n;while((n=in.read(buf))!=-1)out.write(buf,0,n);
+                }
+            }
+        }
     }
     private static void error(Activity a){Toast.makeText(a,"No se pudo cambiar el tema",Toast.LENGTH_LONG).show();}
 }
