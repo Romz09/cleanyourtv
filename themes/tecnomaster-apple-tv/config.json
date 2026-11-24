@@ -1,0 +1,10 @@
+{
+  "background_color": "#10102C",
+  "wallpaper": true,
+  "columns": 6,
+  "dock_glass": true,
+  "reduced_motion": true,
+  "ambient_glow": false,
+  "advanced_effects": false,
+  "wallpaper_true_color": false
+}
