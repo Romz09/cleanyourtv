@@ -124,6 +124,11 @@ public final class LauncherSettingsActivity extends Activity {
             reverseRow(clockChoices);
         }
         wallpaperChoice = findViewById(R.id.wallpaperChoice);
+        TextView themes = findViewById(R.id.themeChoice);
+        themes.setOnClickListener(v -> ThemeSelector.show(this, () -> {
+            changed();
+            finish();
+        }));
         wallpaperChoice.setOnClickListener(v -> showWallpaperPicker());
         animationsChoice = findViewById(R.id.animationsChoice);
         animationsChoice.setOnClickListener(v -> {
