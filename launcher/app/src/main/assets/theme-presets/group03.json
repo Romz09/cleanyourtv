@@ -1,0 +1,143 @@
+{
+  "family": {
+    "background_color": "#000000",
+    "dock_glass": false,
+    "dock_band": false,
+    "glass_style": "rim",
+    "dock_title": false,
+    "columns": 6,
+    "ambient_glow": false,
+    "app_glow": false,
+    "icon_only_buttons": true,
+    "icon_only_inputs": true,
+    "show_greeting": true,
+    "clock_wallpaper": true,
+    "tile_menu": true,
+    "wallpaper": true,
+    "wallpaper_rotation_minutes": 60,
+    "wallpaper_moods": {
+      "morning": [
+        "morning.jpg"
+      ],
+      "evening": [
+        "evening.jpg"
+      ],
+      "night": [
+        "night.jpg"
+      ]
+    },
+    "wallpaper_dim": 0,
+    "wallpaper_order": "sequential",
+    "sky_intensity": 0
+  },
+  "glass": {
+    "dock_apps": [
+      "com.netflix.ninja",
+      "com.google.android.youtube.tv",
+      "com.amazon.amazonvideo.livingroom",
+      "com.disney.disneyplus",
+      "com.wbd.stream",
+      "com.apple.atve.androidtv.appletv"
+    ],
+    "background_color": "#090C14",
+    "wallpaper": true,
+    "cinematic_home": true,
+    "dock_glass": true,
+    "icon_only_buttons": true,
+    "app_glow": true,
+    "glow_style": "horizon",
+    "focus_overshoot": false,
+    "advanced_effects": true
+  },
+  "glass-gallery": {
+    "columns": 7,
+    "rows_below_dock": 0,
+    "wallpaper": true,
+    "wallpaper_rotation_minutes": 30,
+    "wallpaper_order": "sequential",
+    "wallpaper_captions": false,
+    "wallpaper_true_color": false,
+    "wallpaper_dim": 20,
+    "background_color": "#000000",
+    "dock_row": true,
+    "dock_glass": true,
+    "dock_band": true,
+    "dock_opacity": 30,
+    "dock_even_padding": true,
+    "dock_title": false,
+    "glass_style": "glass",
+    "ambient_glow": false,
+    "app_glow": false,
+    "cinematic_home": false,
+    "header_white": true,
+    "show_greeting": false,
+    "icon_only_buttons": true,
+    "icon_only_inputs": true,
+    "animations": true,
+    "advanced_effects": false,
+    "focus_overshoot": true,
+    "fade_rows": false,
+    "app_library": true,
+    "library_button": true,
+    "show_library_pill": false,
+    "library_ok_opens": true,
+    "single_row": false,
+    "dock_apps": [
+      "com.google.android.youtube.tv",
+      "com.netflix.ninja",
+      "com.disney.disneyplus",
+      "com.wbd.stream",
+      "com.amazon.amazonvideo.livingroom",
+      "com.google.android.youtube.tvmusic",
+      "com.google.android.play.games"
+    ]
+  },
+  "halloween": {
+    "seasonal_skin": "halloween",
+    "festival_until": "2026-11-01",
+    "accent_color": "#FF7A1A",
+    "background_color": "#07050B",
+    "wallpaper": true,
+    "wallpaper_rotation_minutes": 30,
+    "wallpaper_order": "sequential",
+    "wallpaper_captions": false,
+    "wallpaper_dim": 12,
+    "dock_glass": true,
+    "dock_opacity": 40,
+    "dock_even_padding": true,
+    "ambient_glow": false,
+    "fade_rows": true,
+    "clock_wallpaper": true,
+    "clock_wallpaper_dim": 45
+  },
+  "istanbul": {
+    "background_color": "#000000",
+    "dock_glass": false,
+    "dock_band": false,
+    "glass_style": "rim",
+    "dock_title": false,
+    "columns": 6,
+    "ambient_glow": false,
+    "app_glow": false,
+    "icon_only_buttons": true,
+    "icon_only_inputs": true,
+    "show_greeting": true,
+    "tile_menu": true,
+    "wallpaper": true,
+    "wallpaper_rotation_minutes": 60,
+    "wallpaper_moods": {
+      "morning": [
+        "morning.jpg"
+      ],
+      "evening": [
+        "evening.jpg"
+      ],
+      "night": [
+        "night.jpg"
+      ]
+    },
+    "wallpaper_dim": 0,
+    "wallpaper_order": "sequential",
+    "sky_intensity": 0
+  }
+}
