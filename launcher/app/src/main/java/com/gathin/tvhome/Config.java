@@ -682,7 +682,8 @@ final class Config {
         if (chosenRows >= 0 && chosenRows <= 3) rowsBelow = chosenRows;
         animations = choices.getBoolean("animations", animations);
         advancedEffects = choices.getBoolean("advanced_effects", advancedEffects);
-        File wallpaper = dir != null ? new File(dir, WALLPAPER_NAME) : null;
+        File artworkDir = ThemeSelector.artworkDir(ctx, json == null ? null : json.optString("bundled_theme", null), dir);
+        File wallpaper = artworkDir != null ? new File(artworkDir, WALLPAPER_NAME) : null;
         if (wallpaper != null && !(wallpaper.isFile() && wallpaper.length() > 0)) wallpaper = null;
         // A theme can also switch the wallpaper off while the file is still there.
         boolean wallpaperEnabled = json == null || bool(json, "wallpaper", true);
@@ -697,15 +698,15 @@ final class Config {
         // An unknown order must not silently change how an existing collection rotates.
         if (!WallpaperRotation.validOrder(wallpaperOrder)) wallpaperOrder = WallpaperRotation.ORDER_SHUFFLE;
         List<File> wallpapers = new ArrayList<>();
-        if (rotationMinutes > 0 && dir != null && wallpaperEnabled) {
-            wallpapers.addAll(WallpaperRotation.images(new File(dir, "wallpapers")));
+        if (rotationMinutes > 0 && artworkDir != null && wallpaperEnabled) {
+            wallpapers.addAll(WallpaperRotation.images(new File(artworkDir, "wallpapers")));
         }
         if (wallpapers.isEmpty() && wallpaper != null) wallpapers.add(wallpaper);
         // An on-TV wallpaper pick overrides the theme: a filename from the wallpapers/
         // collection, or "none". Unset means the theme decides (off by default).
         String wallpaperChoice = choices.getString(WALLPAPER_CHOICE_KEY, null);
-        List<File> chosen = WallpaperRotation.chosen(dir == null ? Collections.emptyList()
-                : WallpaperRotation.images(new File(dir, "wallpapers")), wallpaper, wallpaperChoice);
+        List<File> chosen = WallpaperRotation.chosen(artworkDir == null ? Collections.emptyList()
+                : WallpaperRotation.images(new File(artworkDir, "wallpapers")), wallpaper, wallpaperChoice);
         if (chosen != null) {
             wallpapers.clear();
             wallpapers.addAll(chosen);
