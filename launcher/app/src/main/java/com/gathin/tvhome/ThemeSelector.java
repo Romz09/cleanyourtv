@@ -28,13 +28,27 @@ final class ThemeSelector {
             themes.put("Eclipse personalizado",new JSONObject());
             String[] names=themes.keySet().toArray(new String[0]);
             new AlertDialog.Builder(a).setTitle("Temas / Themes").setItems(names,(d,i)->
-                new AlertDialog.Builder(a).setTitle(names[i])
-                .setMessage("Aplicar estilo visual conservando aplicaciones y fondo actual.")
-                .setPositiveButton("Aplicar",(x,y)->select(a,names[i],themes.get(names[i]),done))
-                .setNegativeButton(android.R.string.cancel,null).show())
+                preview(a,names[i],themes.get(names[i]),done))
                 .setNeutralButton("Restaurar anterior",(d,i)->restore(a,done))
                 .setNegativeButton(android.R.string.cancel,null).show();
         }catch(Exception e){error(a);}
+    }
+    private static void preview(Activity a,String name,JSONObject theme,Runnable done){
+        AlertDialog.Builder dialog=new AlertDialog.Builder(a).setTitle(name);
+        try(InputStream in=a.getAssets().open("original-themes/"+name+"/screenshot.jpg")){
+            android.graphics.BitmapFactory.Options opts=new android.graphics.BitmapFactory.Options();
+            opts.inSampleSize=2;
+            android.graphics.Bitmap bitmap=android.graphics.BitmapFactory.decodeStream(in,null,opts);
+            if(bitmap==null)throw new IOException();
+            android.widget.ImageView image=new android.widget.ImageView(a);
+            image.setImageBitmap(bitmap);
+            image.setAdjustViewBounds(true);
+            image.setScaleType(android.widget.ImageView.ScaleType.FIT_CENTER);
+            image.setMaxHeight(a.getResources().getDisplayMetrics().heightPixels/2);
+            dialog.setView(image);
+        }catch(IOException e){dialog.setMessage("Aplicar tema conservando las aplicaciones actuales.");}
+        dialog.setPositiveButton("Aplicar",(x,y)->select(a,name,theme,done))
+            .setNegativeButton(android.R.string.cancel,null).show();
     }
     private static final String[] VISUAL={"background_color","columns","rows_below_dock","dock_opacity","dock_glass","dock_title","dock_even_padding","ambient_glow","app_glow","header_white","fade_rows","focus_overshoot","advanced_effects","animations","reduced_motion","wallpaper_dim","wallpaper_true_color","bundled_theme","wallpaper","wallpaper_rotation_minutes","wallpaper_order","wallpaper_moods","wallpaper_captions","clock_wallpaper","clock_wallpaper_dim"};
     private static void write(AtomicFile file,byte[] data)throws IOException{
